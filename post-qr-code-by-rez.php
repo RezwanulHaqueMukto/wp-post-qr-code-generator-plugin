@@ -9,6 +9,10 @@
 * Text Domain:pqc-by-rez
 * Domain Path: /languages
 */
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+   exit;
+}
 
 add_action('plugin_loaded', 'pqc_loadtextdomain');
 function pqc_loadtextdomain()
