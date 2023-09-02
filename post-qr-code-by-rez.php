@@ -22,9 +22,9 @@ function pqc_loadtextdomain()
 
 
 // ?###### adding qr code after the post ######
-require_once(plugin_dir_path(__FILE__) . 'includes/add_qr_code.php');
+require_once(plugin_dir_path(__FILE__) . '/includes/add_qr_code.php');
 
 
 
 // ?###### adding controls ######
-require_once(plugin_dir_path(__FILE__) . 'includes/controls.php');
+require_once(plugin_dir_path(__FILE__) . '/includes/controls.php');
