@@ -1,4 +1,21 @@
 <?php
+
+$pqc_country_list =   array(
+   __('Afghanistan', 'pqc-by-rez'),
+
+   __('Bangladesh', 'pqc-by-rez'),
+
+   __('India', 'pqc-by-rez'),
+
+   __('Nepal', 'pqc-by-rez'),
+);
+
+add_action('init', 'pqc_init');
+function pqc_init()
+{
+   global $pqc_country_list;
+   $pqc_country_list = apply_filters('pqc_country_list', $pqc_country_list);
+}
 add_action('admin_init', 'pqc_display_qr_code_settings');
 function pqc_display_qr_code_settings()
 {
@@ -26,24 +43,33 @@ function pqc_display_qr_code_settings()
       array('pqc_width')
    );
    add_settings_field(
-      'pqc_country', 
+      'pqc_country',
       __('Select Country', 'pqc_settings_init'),
-      'pqc_display_select_field', 
+      'pqc_display_select_field',
+      'general',
+      'pqc_section'
+   );
+   add_settings_field(
+      'pqc_checkbox',
+      __('Select Country', 'pqc_settings_init'),
+      'pqc_display_checkbox_field',
       'general',
       'pqc_section'
    );
    register_setting('general', 'pqc_height', array('sanitize_callback' => 'esc_attr'));
    register_setting('general', 'pqc_width', array('sanitize_callback' => 'esc_attr'));
    register_setting('general', 'pqc_country', array('sanitize_callback' => 'esc_attr'));
+   register_setting('general', 'pqc_checkbox');
 }
 
 function pqc_display_select_field()
 {
-   $option = get_option('pqc_country'); 
-   $countries = array('None', 'Afghanistan', 'Bangladesh', 'India', 'Nepal');
+   global $pqc_country_list;
+   $pqc_country_list = apply_filters('pqc_country_list', $pqc_country_list);
+   $option = get_option('pqc_country');
 
-   printf('<select id="%s" name="%s"  >', 'pqc_country', 'pqc_country'); 
-   foreach ($countries as $country) {
+   printf('<select id="%s" name="%s"  >', 'pqc_country', 'pqc_country');
+   foreach ($pqc_country_list as $country) {
       $selected = ($option == $country) ? 'selected' : '';
       printf('<option value="%s" %s>%s</option>', $country, $selected, $country);
    }
@@ -65,4 +91,18 @@ function pqc_display_field($args)
 
    <p class="description"><?php _e('Enter the QR code height in pixels.', 'pqc_settings_init'); ?></p>
 <?php
+}
+
+function pqc_display_checkbox_field()
+{
+   $option = get_option('pqc_checkbox');
+   global $pqc_country_list;
+   $pqc_country_list = apply_filters('pqc_country_list', $pqc_country_list);
+   foreach ($pqc_country_list as $country) {
+      $selected = '';
+      if (is_array($option) && in_array($country, $option)) {
+         $selected = 'checked';
+      }
+      printf('<input type="checkbox" name="pqc_checkbox[]" value="%s" %s > %s </br>', $country, $selected, $country);
+   }
 }
