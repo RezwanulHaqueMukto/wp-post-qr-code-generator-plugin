@@ -10,7 +10,7 @@ A lightweight WordPress plugin that automatically generates QR codes for your po
 - Option to display QR code before or after content, or via shortcode.
 - Lightweight and performant—no unnecessary bloat.
 - Compatible with Gutenberg and classic editor.
-![qr-code-with-encrypted-text-lorem-ipsum-2AC97D3](https://github.com/user-attachments/assets/31981cbe-fcbc-4b5a-a883-fb17399b1c4a)
+
 
 
 
